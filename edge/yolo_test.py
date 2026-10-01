@@ -1,13 +1,16 @@
 from ultralytics import YOLO
 
-# Load a pretrained YOLO model
+# Load pretrained YOLO model
 model = YOLO("yolo11n.pt")
 
-# Run detection on our test image
+# Run detection
 results = model("data/test_images/test.jpg")
 
-# Print detected objects
+# Save image with bounding boxes
 for result in results:
+    annotated_image = result.plot()
+    result.save(filename="data/test_images/yolo_result.jpg")
+
     print("\nDetected objects:")
 
     for box in result.boxes:
@@ -19,3 +22,5 @@ for result in results:
             f"{class_name} - "
             f"confidence: {confidence:.2f}"
         )
+
+print("\nAnnotated image saved successfully.")
